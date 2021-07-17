@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet"> 
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"> 
+
+    <!-- <link rel="stylesheet" href="style.css"> -->
+
+    <title>MI</title>
+
+    <style>
+        html, body{
+            padding: 0;
+            margin: 0;
+        }
+
+        body{
+            background-color: #F1FAEE;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .navbar {
+            background-color: #1D3557;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .brand {
+            display: block;
+            padding: 0 24px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 24px;
+        }
+
+        .navbar ul{
+            padding: 0;
+            margin: 0;
+
+            list-style-type: none;
+            display: flex;
+
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .navbar ul li a {
+            display: block;
+            padding: 24px;
+        }
+
+        .navbar ul a:hover,
+        .navbar ul a:focus {
+            background-color: #457B9D;
+        }
+
+        .navbar a {
+            color: #F1FAEE;
+        }
+
+        .container {
+            padding: 20px 70px;
+        }
+
+        .grid-container {
+            display: grid;
+        }
+
+        .grid-container--fit{
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            column-gap: 20px;
+            row-gap: 20px;
+        }
+
+        .grid-element {
+            height: 300px;
+            padding: 0;
+            color: #fff;
+            border: 1px solid #fff;
+        }
+
+        .film-img {
+            height: 250px;
+            margin: 0;
+        }
+
+        .film-title{
+            height: 50px;
+            margin: 0;
+        }
+
+        .film-title > p {
+            margin-top: 0;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 15px;
+            text-align: center;
+            color: #E63946;
+        }
+
+        .film-img > img{
+            max-width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        /* css for infoMovie */
+        .flex-container{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .iFilm-img{
+            width: 300px;
+            padding: 20px;
+        }
+
+        .iFilm-img > img {
+            max-width: 100%;
+        }
+
+        .iFilm-info{
+            width: 700px;
+            padding: 0px 20px;
+        }
+
+        .iFilm-info p {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .iFilm-info--title > p {
+            font-size: 2em;
+        }
+        /* End of css for infoMovie */
+
+
+        /* Smartphone Potrait */
+        @media (min-width: 320px) and (max-width: 480px) {
+            .grid-container--fit{
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                column-gap: 20px;
+            }
+
+
+            /* css for infoMovie */
+            .flex-container{
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                align-items: center;
+            }
+
+            .iFilm-img{
+                width: 200px;
+            }
+
+            .iFilm-info{
+                width: 250px;
+                padding: 0px;
+                margin: 0px;
+            }
+
+            .iFilm-info p {
+                font-size: 0.8em;
+            }
+
+            .iFilm-info--title > p {
+                font-size: 1em;
+            }
+
+            /* End of css for infoMovie */
+        }
+
+
+        /* Smartphone Landscape */
+        @media (min-width: 480px) and (max-width: 767px) {
+            .grid-container--fit{
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                column-gap: 20px;
+            }
+
+
+            /* css for infoMovie */
+            .flex-container{
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                align-items: center;
+            }
+
+            .iFilm-img{
+                width: 200px;
+            }
+
+            .iFilm-info{
+                width: 400px;
+                padding: 0px;
+                margin: 0px;
+            }
+
+            .iFilm-info p {
+                font-size: 0.8em;
+            }
+
+            .iFilm-info--title > p {
+                font-size: 1em;
+            }
+            /* End of css for infoMovie */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a class="brand" href="">MI</a>
+        <ul>
+            <li>
+                <a href="{% url 'index' %}">Home</a>
+            </li>
+            <li>
+                <a href="">Profil</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="flex-container">
+        <div class="iFilm-img" id="iFilm-img">
+            <!-- <img src="https://imdb-api.com/images/original/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_Ratio0.6791_AL_.jpg" alt=""> -->
+        </div>
+        <div class="iFilm-info" id="iFilm-info">
+            <!-- <div class="iFilm-info--title">
+                <p><b>The Lord of the Rings: The Fellowship of the Ring</b></p>
+                <hr>
+            </div>
+            <div>
+                <p><b>Tahun :</b> 2001</p>
+                <hr>
+            </div>
+            <div>
+                <p><b>Genre :</b> Action, Adventure, Drama, Fantasy</p>
+                <hr>
+            </div>
+            <div>
+                <p><b>imDb Rating :</b> 8.8</p>
+                <hr>
+            </div>
+            <div>
+                <p><b>Pemain : </b> </p>
+                <p>Elijah Wood, Ian McKellen, Orlando Bloom, Sean Bean</p>
+                <hr>
+            </div>
+            <div>
+                <p><b>Sinopsis : </b></p>
+                <p>An ancient Ring thought lost for centuries has been found, and through a strange twist of fate has been given to a small Hobbit named Frodo. When Gandalf discovers the Ring is in fact the One Ring of the Dark Lord Sauron, Frodo must make an epic quest to the Cracks of Doom in order to destroy it. However, he does not go alone. He is joined by Gandalf, Legolas the elf, Gimli the Dwarf, Aragorn, Boromir, and his three Hobbit friends Merry, Pippin, and Samwise. Through mountains, snow, darkness, forests, rivers and plains, facing evil and danger at every corner the Fellowship of the Ring must go. Their quest to destroy the One Ring is the only hope for the end of the Dark Lords reign.</p>
+            </div> -->
+        </div>
+    </div>
+
+    <!-- <script>
+        let id = 'tt0468569';
+        let link = '{% url "movieInfo" '+id.toString()+' }%';
+        let foo = '<a href="'+link+'">Profil</a>';
+        console.log(foo);
+    </script> -->
+
+    <script>
+        var movie = 0;
+        var dataMovie;
+        let filmId = "{{id}}";
+        let url = "https://imdb-api.com/en/API/Title/k_p22r88lg/"+filmId;
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onload = function () {
+            let res = JSON.parse(xhr.responseText);
+            if (xhr.readyState == 4 && xhr.status == "200") {
+                // console.log(res);
+                // generateMovie(res);	
+                generateInfoMovie(res);
+                // dataMovie = res;
+            } else {
+                alert('Failed!');
+            }
+        }
+        xhr.send();
+
+        function generateInfoMovie(data) {
+            let textImg = '<img src="'+data.image+'" alt="">';
+            let textInfo = '<div class="iFilm-info--title"><p><b>'+data.title+'</b></p><hr></div><div><p><b>Tahun :</b> '+data.year+'</p><hr></div><div><p><b>Genre :</b> '+data.genres+'</p><hr></div><div><p><b>imDb Rating :</b> '+data.imDbRating+'</p><hr></div><div><p><b>Pemain : </b> </p><p>'+data.stars+'</p><hr></div><div><p><b>Sinopsis : </b></p><p>'+data.plot+'</p></div>';
+
+            document.getElementById("iFilm-img").innerHTML += textImg;
+            document.getElementById("iFilm-info").innerHTML += textInfo;
+        }
+    </script>
+</body>
+</html>

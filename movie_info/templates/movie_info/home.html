@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet"> 
+
+    <!-- <link rel="stylesheet" href="style.css"> -->
+
+    <title>MI</title>
+
+    <style>
+        html, body{
+            padding: 0;
+            margin: 0;
+        }
+
+        body{
+            background-color: #F1FAEE;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .navbar {
+            background-color: #1D3557;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .brand {
+            display: block;
+            padding: 0 24px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 24px;
+        }
+
+        .navbar ul{
+            padding: 0;
+            margin: 0;
+
+            list-style-type: none;
+            display: flex;
+
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .navbar ul li a {
+            display: block;
+            padding: 24px;
+        }
+
+        .navbar ul a:hover,
+        .navbar ul a:focus {
+            background-color: #457B9D;
+        }
+
+        .navbar a {
+            color: #F1FAEE;
+        }
+
+        .container {
+            padding: 20px 70px;
+        }
+
+        .grid-container {
+            display: grid;
+        }
+
+        .grid-container--fit{
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            column-gap: 20px;
+            row-gap: 20px;
+        }
+
+        .grid-element {
+            height: 300px;
+            padding: 0;
+            color: #fff;
+            border: 1px solid #fff;
+        }
+
+        .film-img {
+            height: 250px;
+            margin: 0;
+        }
+
+        .film-title{
+            height: 50px;
+            margin: 0;
+        }
+
+        .film-title > p {
+            margin-top: 0;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 15px;
+            text-align: center;
+            color: #E63946;
+        }
+
+        .film-img > img{
+            max-width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .grid-element:hover{
+            transform: scale(1.05);
+        }
+
+        .flex-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        /* Smartphone Potrait */
+        @media (min-width: 320px) and (max-width: 480px) {
+            .grid-container--fit{
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                column-gap: 20px;
+            }
+        }
+
+        /* Smartphone Landscape */
+        @media (min-width: 480px) and (max-width: 767px) {
+            .grid-container--fit{
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                column-gap: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a class="brand" href="">MI</a>
+        <ul>
+            <li>
+                <a href="">Home</a>
+            </li>
+            <li>
+                <a href="">Profil</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="grid-container grid-container--fit" id="movie-contain"></div>
+
+        <div class="flex-container">
+            <button id="more-movies" onclick="generateMoreMovie(dataMovie)">Show More Movies...</button>
+        </div>
+    </div>
+
+    <!-- <script type="text/javascript" src="movies.js"></script> -->
+
+    <script>
+        var movie = 0;
+        var dataMovie;
+        let url = "https://imdb-api.com/en/API/Top250Movies/k_p22r88lg ";
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onload = function () {
+            let res = JSON.parse(xhr.responseText);
+            if (xhr.readyState == 4 && xhr.status == "200") {
+                generateMovie(res);	
+                dataMovie = res;
+            } else {
+                alert('Failed!');
+            }
+        }
+        xhr.send();
+
+
+        function generateMovie(data) {
+            for (let index = 0; index < 28; index++) {
+                // let idFilm = "'"+data.items[index].id+"'";
+                var idFilm = data.items[index].id;
+                console.log(idFilm);
+                // let link = "{% url 'movieInfo' 'id' %}";
+                let link = "/info/"+idFilm;
+                // console.log(idFilm);
+                console.log(link);
+                // console.log(typeof(link));
+                // console.log(link2);
+                let text = '<a href="'+link+'" target="blank"><div class="grid-element"><div class="film-img"><img src="'+data.items[index].image+'" alt="" loading="lazy"></div><div class="film-title"><p>'+data.items[index].title+'</p></div></div></a>';
+                document.getElementById("movie-contain").innerHTML += text;
+            }
+            movie = 28;
+        }
+
+        function generateMoreMovie(dataMovie) {
+            let data = dataMovie;
+            let sisa = 250 - movie;
+            
+            if (movie == 250) {
+            alert('No More Movies... ;)');
+            }
+
+            if (sisa > 28) {
+            for (let index = movie; index < (movie + 28); index++) {
+                let text = '<a href="http://"><div class="grid-element"><div class="film-img"><img src="'+data.items[index].image+'" alt="" loading="lazy"></div><div class="film-title"><p>'+data.items[index].title+'</p></div></div></a>';
+                document.getElementById("movie-contain").innerHTML += text;
+            }
+            movie = movie + 28;
+            } else {
+            for (let index = movie; index < 250; index++) {
+                let text = '<a href="http://"><div class="grid-element"><div class="film-img"><img src="'+data.items[index].image+'" alt="" loading="lazy"></div><div class="film-title"><p>'+data.items[index].title+'</p></div></div></a>';
+                document.getElementById("movie-contain").innerHTML += text;
+            }
+            movie = 250;
+            }
+        }
+    </script>
+</body>
+</html>
